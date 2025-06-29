@@ -1,10 +1,7 @@
-# app.py
 from flask import Flask, request, jsonify
 from time import time
 from typing import Dict, List
 from data import mock_dataset, auxiliary_data, providers
-
-print("Flask app is loading...")
 
 app = Flask(__name__)
 
@@ -26,10 +23,6 @@ def limit_requests():
 
     if len(rate_limits[ip]) > RATE_LIMIT:
         return jsonify({"error": "Rate limit exceeded"}), 429
-    
-@app.route("/")
-def index():
-    return "API is working!"
 
 @app.route("/charges", methods=["GET"])
 def get_charges():
@@ -48,6 +41,10 @@ def get_charges():
         "data": filtered,
         "auxiliary_data": auxiliary_data
     })
+
+@app.route("/")
+def index():
+    return "API is working!"
 
 if __name__ == "__main__":
     app.run(debug=True)
